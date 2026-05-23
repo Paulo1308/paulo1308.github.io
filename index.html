@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Capitais do Brasil</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f8ff; padding: 20px; text-align: center; }
+    .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; margin-bottom: 10px; }
+    .pergunta { font-size: 20px; margin: 25px 0; color: #333; }
+        button { display: block; width: 100%; padding: 15px; margin: 10px 0; font-size: 16px; background: #4CAF50; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        button:hover { background: #45a049; }
+        #resultado { font-size: 18px; font-weight: bold; margin-top: 20px; }
+    .pontos { font-size: 16px; color: #666; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇧🇷 Quiz Capitais 🇧🇷</h1>
+        <p>Quiz educativo gratuito sobre geografia do Brasil</p>
+        <div class="pontos">Pontos: <span id="pontos">0</span>/5</div>
+        <div class="pergunta" id="pergunta">Qual a capital do Acre?</div>
+        <div id="opcoes">
+            <button onclick="responder('Rio Branco')">Rio Branco</button>
+            <button onclick="responder('Manaus')">Manaus</button>
+            <button onclick="responder('Porto Velho')">Porto Velho</button>
+            <button onclick="responder('Boa Vista')">Boa Vista</button>
+        </div>
+        <div id="resultado"></div>
+        <p style="margin-top:30px; font-size:12px; color:#888;">Contato: paulo@email.com</p>
+    </div>
+    <script>
+        let pontos = 0;
+        let perguntaAtual = 0;
+        const perguntas = [
+            {q: "Qual a capital do Acre?", opcoes: ["Rio Branco", "Manaus", "Porto Velho", "Boa Vista"], certa: "Rio Branco"},
+            {q: "Qual a capital da Bahia?", opcoes: ["Salvador", "Recife", "Fortaleza", "Aracaju"], certa: "Salvador"},
+            {q: "Qual a capital do Rio Grande do Sul?", opcoes: ["Porto Alegre", "Curitiba", "Florianópolis", "Campo Grande"], certa: "Porto Alegre"},
+            {q: "Qual a capital de Minas Gerais?", opcoes: ["Belo Horizonte", "Vitória", "Rio de Janeiro", "São Paulo"], certa: "Belo Horizonte"},
+            {q: "Qual a capital do Amazonas?", opcoes: ["Manaus", "Belém", "Macapá", "Boa Vista"], certa: "Manaus"}
+        ];
+        function responder(resposta) {
+            if (resposta === perguntas[perguntaAtual].certa) {
+                pontos++;
+                document.getElementById('resultado').innerHTML = '✅ Acertou!';
+                document.getElementById('resultado').style.color = 'green';
+            } else {
+                document.getElementById('resultado').innerHTML = '❌ Errou! Era ' + perguntas[perguntaAtual].certa;
+                document.getElementById('resultado').style.color = 'red';
+            }
+            document.getElementById('pontos').textContent = pontos;
+            setTimeout(proximaPergunta, 1500);
+        }
+        function proximaPergunta() {
+            perguntaAtual++;
+            if (perguntaAtual < perguntas.length) {
+                document.getElementById('pergunta').textContent = perguntas[perguntaAtual].q;
+                const botoes = document.querySelectorAll('#opcoes button');
+                perguntas[perguntaAtual].opcoes.forEach((opcao, i) => {
+                    botoes[i].textContent = opcao;
+                    botoes[i].onclick = () => responder(opcao);
+                });
+                document.getElementById('resultado').textContent = '';
+            } else {
+                document.getElementById('pergunta').textContent = 'Fim do
